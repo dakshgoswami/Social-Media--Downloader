@@ -6,13 +6,11 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   // vite.config.js
-  ...(process.env.NODE_ENV === "development" && {
     server: {
       proxy: {
-        "/api": "http://localhost:3000",
+        "/api": "https://social-media-downloader-lafi.onrender.com",
       },
     },
-  }),
   build: {
     outDir: "dist", // ⚠️ must match the directory you tell Render
   },
