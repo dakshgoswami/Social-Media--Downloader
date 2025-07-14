@@ -1,34 +1,35 @@
 import axios from "axios";
 import { exec } from "child_process";
+import youtubedl from 'youtube-dl-exec';
 
 export const twitterController = async (req, res) => {
   const { tweetUrl } = req.body;
 
-  if (
-    !tweetUrl ||
-    (!tweetUrl.includes("twitter.com") && !tweetUrl.includes("x.com"))
-  ) {
+  if (!tweetUrl || (!tweetUrl.includes("twitter.com") && !tweetUrl.includes("x.com"))) {
     return res.status(400).json({ error: "Invalid Twitter URL" });
   }
 
-  // Command to get direct video+audio URL (merged stream or best)
-  const command = `yt-dlp -f "mp4" -g "${tweetUrl}"`;
+  try {
+    const result = await youtubedl(tweetUrl, {
+      dumpSingleJson: true,
+      noWarnings: true,
+      referer: "https://twitter.com",
+      userAgent: "Mozilla/5.0",
+    });
 
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error("yt-dlp error:", error.message);
-      return res.status(500).json({ error: "Failed to get video URL" });
-    }
+    const downloadUrl = result?.url || result?.formats?.find(f => f.ext === "mp4")?.url;
 
-    const videoUrl = stdout.trim();
-
-    if (!videoUrl) {
+    if (!downloadUrl) {
       return res.status(404).json({ error: "Video URL not found" });
     }
 
-    return res.status(200).json({ videoUrl });
-  });
+    res.status(200).json({ videoUrl: downloadUrl });
+  } catch (error) {
+    console.error("yt-dlp error:", error.message);
+    res.status(500).json({ error: "Failed to extract Twitter video." });
+  }
 };
+
 
 export const twitterDownloaderController = async (req, res) => {
   const { video } = req.query;

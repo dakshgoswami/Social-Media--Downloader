@@ -1,5 +1,6 @@
 import axios from "axios";
 import { exec } from "child_process";
+import youtubedl from "youtube-dl-exec";
 
 export const youtubeController = async (req, res) => {
   const { youtubeUrl } = req.body;
@@ -9,19 +10,24 @@ export const youtubeController = async (req, res) => {
   }
 
   // Command to get direct video+audio URL (merged stream or best)
-  const command = `yt-dlp -f best -g "${youtubeUrl}"`;
+  try {
+    const output = await youtubedl(youtubeUrl, {
+      dumpSingleJson: true,
+      noWarnings: true,
+      noCheckCertificates: true,
+      preferFreeFormats: true,
+    });
 
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error("yt-dlp error:", error.message);
-      return res.status(500).json({ error: "Failed to get video URL" });
-    }
+    const videoUrl = output?.url || output?.formats?.[0]?.url;
 
-    const directVideoUrl = stdout.trim();
+    if (!videoUrl) throw new Error("No video URL found");
 
-    return res.status(200).json({ videoUrl: directVideoUrl });
-  });
-}
+    return res.status(200).json({ videoUrl });
+  } catch (error) {
+    console.error("youtube-dl-exec error:", error.message);
+    return res.status(500).json({ error: "Failed to get video URL" });
+  }
+};
 
 export const youtubeDownloaderController = async (req, res) => {
   const { video } = req.query;
@@ -43,9 +49,8 @@ export const youtubeDownloaderController = async (req, res) => {
     );
     res.setHeader("Content-Type", "video/mp4");
     response.data.pipe(res);
-
   } catch (err) {
     console.error("Download error:", err.message);
     res.status(500).send("Download failed");
   }
-}
+};

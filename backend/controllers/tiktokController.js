@@ -4,6 +4,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import downloadsDir from "../utils/downloadPath.js";
+import youtubedl from 'youtube-dl-exec';
 
 export const tiktokController = async (req, res) => {
   const { tiktokUrl } = req.body;
@@ -12,20 +13,27 @@ export const tiktokController = async (req, res) => {
     return res.status(400).json({ error: "Invalid TikTok URL" });
   }
 
-  const outputFile = `tiktok_${Date.now()}.mp4`;
-  const outputPath = path.join(downloadsDir, outputFile);
-  console.log(outputPath)
-  const command = `yt-dlp -f mp4 -o "${outputPath}" "${tiktokUrl}"`;
+  try {
+    const result = await youtubedl(tiktokUrl, {
+      dumpSingleJson: true,
+      noWarnings: true,
+      referer: "https://www.tiktok.com",
+      userAgent: "Mozilla/5.0",
+    });
 
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error("yt-dlp error:", error.message);
-      return res.status(500).json({ error: "Failed to download TikTok video" });
+    const downloadUrl = result?.url || result?.formats?.find(f => f.ext === "mp4")?.url;
+
+    if (!downloadUrl) {
+      return res.status(404).json({ error: "Video URL not found" });
     }
 
-    res.status(200).json({ video: outputFile });
-  });
+    res.status(200).json({ videoUrl: downloadUrl });
+  } catch (error) {
+    console.error("yt-dlp error:", error.message);
+    res.status(500).json({ error: "Failed to extract TikTok video." });
+  }
 };
+
 
 export const tiktokDownloaderController = (req, res) => {
   const { file } = req.query;

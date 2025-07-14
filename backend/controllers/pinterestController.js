@@ -2,32 +2,36 @@ import { exec } from "child_process";
 import path from "path";
 import fs from "fs";
 import downloadsDir from "../utils/downloadPath.js";
+import youtubedl from 'youtube-dl-exec';
 
 export const pinterestController = async (req, res) => {
   const { pinterestUrl } = req.body;
 
-  console.log(pinterestUrl);
-
-  if (!pinterestUrl || !pinterestUrl.includes("https://pin.it")) {
+  if (!pinterestUrl || !pinterestUrl.includes("pinterest.")) {
     return res.status(400).json({ error: "Invalid Pinterest URL" });
   }
 
-  const outputFile = `Pinterest_${Date.now()}.mp4`;
-  const outputPath = path.join(downloadsDir, outputFile);
-  console.log(outputPath);
+  try {
+    const result = await youtubedl(pinterestUrl, {
+      dumpSingleJson: true,
+      noWarnings: true,
+      referer: "https://www.pinterest.com",
+      userAgent: "Mozilla/5.0",
+    });
 
-  const command = `yt-dlp --cookies ./cookies.txt -f "bv+ba/best" --merge-output-format mp4 -o "${outputPath}" "${pinterestUrl}"`;
+    const downloadUrl = result?.url || result?.formats?.find(f => f.ext === "mp4")?.url;
 
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error("yt-dlp error:", error.message);
-      return res.status(500).json({ error: "Failed to get video URLs" });
+    if (!downloadUrl) {
+      return res.status(404).json({ error: "Video URL not found" });
     }
 
-    console.log("✅ Downloaded:", outputFile);
-    return res.status(200).json({ video: outputFile });
-  });
+    res.status(200).json({ videoUrl: downloadUrl });
+  } catch (error) {
+    console.error("yt-dlp error:", error.message);
+    res.status(500).json({ error: "Failed to extract Pinterest video." });
+  }
 };
+
 
 export const pinterestDownloaderController = (req, res) => {
   const { file } = req.query;
