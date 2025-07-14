@@ -228,7 +228,7 @@ export const DataContextProvider = ({ children }) => {
     }
     setIsDownlaoding(true);
     try {
-      const response = await axios.post(`${backend_url}:3000/api/youtube`, {
+      const response = await axios.post(`${backend_url}/api/youtube`, {
         youtubeUrl: input,
       });
       // console.log("response from twitter", response);
