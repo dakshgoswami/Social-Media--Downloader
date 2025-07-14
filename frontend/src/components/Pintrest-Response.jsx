@@ -5,6 +5,7 @@ const PintrestResponse = () => {
   const { downloadUrl, handleClean } = useContext(DataContext);
   const [countdown, setCountdown] = useState(10);
   const [linkDisabled, setLinkDisabled] = useState(false);
+  const backend_url = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (downloadUrl) {
@@ -25,7 +26,7 @@ const PintrestResponse = () => {
       return () => clearInterval(interval);
     }
   }, [downloadUrl]);
-  
+
   if (!downloadUrl) return null;
 
   // console.log(downloadUrl);
@@ -35,7 +36,7 @@ const PintrestResponse = () => {
     <div className="w-full flex flex-col items-center justify-center gap-4 rounded overflow-hidden">
       <div className="relative bg-white flex justify-center items-center w-[180px] h-[300px] sm:w-[220px] sm:h-[360px] rounded-xl shadow-lg overflow-hidden">
         <video
-          src={`http://localhost:3000/api/pinterest/download?file=${downloadUrl}`}
+          src={`${backend_url}/api/pinterest/download?file=${downloadUrl}`}
           className="absolute top-0 left-0 w-full h-full object-cover"
           muted
           controls
@@ -45,7 +46,7 @@ const PintrestResponse = () => {
           href={
             linkDisabled
               ? undefined
-              : `http://localhost:3000/api/pinterest/download?file=${downloadUrl}`
+              : `${backend_url}/api/pinterest/download?file=${downloadUrl}`
           }
           onClick={(e) => {
             if (linkDisabled) e.preventDefault(); // block navigation

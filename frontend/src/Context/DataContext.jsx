@@ -9,6 +9,7 @@ export const DataContextProvider = ({ children }) => {
   const [input, setInput] = useState("");
   const [isDownloading, setIsDownlaoding] = useState(false);
   const [isAudioURL, setAudioURL] = useState(null);
+  const backend_url = import.meta.env.VITE_API_URL
   // console.log(downloadUrl)
 
   // const handleInstagramUrl = async (e) => {
@@ -33,7 +34,7 @@ export const DataContextProvider = ({ children }) => {
   //   setIsDownlaoding(true);
 
   //   try {
-  //     const response = await axios.post("http://localhost:3000/api/instagram", {
+  //     const response = await axios.post("backend_url/api/instagram", {
   //       instagramURL: input,
   //     });
   //     // console.log(response);
@@ -97,7 +98,7 @@ export const DataContextProvider = ({ children }) => {
     }
     setIsDownlaoding(true);
     try {
-      const response = await axios.post("http://localhost:3000/api/twitter", {
+      const response = await axios.post(`${backend_url}/api/twitter`, {
         tweetUrl: input,
       });
       // console.log("response from twitter", response);
@@ -161,7 +162,7 @@ export const DataContextProvider = ({ children }) => {
     }
     setIsDownlaoding(true);
     try {
-      const response = await axios.post("http://localhost:3000/api/tiktok", {
+      const response = await axios.post(`${backend_url}/api/tiktok`, {
         tiktokUrl: input,
       });
 
@@ -225,7 +226,7 @@ export const DataContextProvider = ({ children }) => {
     }
     setIsDownlaoding(true);
     try {
-      const response = await axios.post("http://localhost:3000/api/youtube", {
+      const response = await axios.post(`${backend_url}/api/youtube`, {
         youtubeUrl: input,
       });
       // console.log("response from twitter", response);
@@ -293,7 +294,7 @@ export const DataContextProvider = ({ children }) => {
     setIsDownlaoding(true);
 
     try {
-      const response = await axios.post("http://localhost:3000/api/pinterest", {
+      const response = await axios.post(`${backend_url}/api/pinterest`, {
         pinterestUrl: input,
       });
 

@@ -3,6 +3,8 @@ import DataContext from "../Context/DataContext";
 
 const YouTubeResponse = () => {
   const { downloadUrl, handleClean } = useContext(DataContext);
+  const backend_url = import.meta.env.VITE_API_URL;
+
   // console.log(isDownloading);&audio=${encodeURIComponent(audioUrl)}
   if (!downloadUrl) return null;
 
@@ -17,7 +19,7 @@ const YouTubeResponse = () => {
           controlsList="nodownload"
         />
         <a
-          href={`http://localhost:3000/api/youtube/download?video=${encodeURIComponent(
+          href={`${backend_url}/api/youtube/download?video=${encodeURIComponent(
             downloadUrl
           )}`}
           className="bg-white text-black absolute bottom-0 w-full text-center p-2 z-50 text-xs sm:px-5 sm:py-2 font-bold hover:bg-zinc-200 transition"
