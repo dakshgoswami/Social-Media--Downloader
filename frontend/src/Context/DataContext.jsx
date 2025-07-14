@@ -79,133 +79,135 @@ export const DataContextProvider = ({ children }) => {
   //   }
   // };
 
-  const handleTwitterUrl = async (e) => {
-    e.preventDefault();
-    if (!input || !input.includes("https://x.com/")) {
-      return toast("enter valid url", {
-        position: "top-right", // or top-right / bottom-right etc.
-        theme: "dark", // Enables dark theme
-        style: {
-          fontSize: "12px", // Small text
-          padding: "8px 16px", // Less padding
-          minWidth: "150px", // Toast width
-          maxWidth: "300px", // Optional: limit max width
-          borderRadius: "10px", // Rounded look
-          backgroundColor: "#1f1f1f", // Override for true dark
-          color: "red", // Text color
-        },
-      });
-    }
-    setIsDownlaoding(true);
-    try {
-      const response = await axios.post(`${backend_url}/api/twitter`, {
-        tweetUrl: input,
-      });
-      // console.log("response from twitter", response);
-      if (response.status === 200) {
-        const data = await response.data;
-        setDownloadUrl(data.videoUrl);
-        setIsDownlaoding(false);
-        toast("Download Completed", {
-          position: "top-right", // or top-right / bottom-right etc.
-          theme: "dark", // Enables dark theme
-          style: {
-            fontSize: "12px", // Small text
-            padding: "8px 16px", // Less padding
-            minWidth: "150px", // Toast width
-            maxWidth: "300px", // Optional: limit max width
-            borderRadius: "10px", // Rounded look
-            backgroundColor: "#1f1f1f", // Override for true dark
-            color: "#fff", // Text color
-          },
-        });
-      } else {
-        if (response.status === 404 || response.status === 500) {
-          toast.error(response.error);
-        }
-        setIsDownlaoding(false);
-      }
-    } catch (error) {
-      toast.error("Failed to fetch video. Please try again later.", {
-        position: "top-right", // or top-right / bottom-right etc.
-        theme: "dark", // Enables dark theme
-        style: {
-          fontSize: "12px", // Small text
-          padding: "8px 16px", // Less padding
-          minWidth: "150px", // Toast width
-          maxWidth: "300px", // Optional: limit max width
-          borderRadius: "10px", // Rounded look
-          backgroundColor: "#1f1f1f", // Override for true dark
-          color: "red", // Text color
-        },
-      });
-      setIsDownlaoding(false);
-    }
-  };
+  // const handleTwitterUrl = async (e) => {
+  //   e.preventDefault();
+  //   if (!input || !input.includes("https://x.com/")) {
+  //     return toast("enter valid url", {
+  //       position: "top-right", // or top-right / bottom-right etc.
+  //       theme: "dark", // Enables dark theme
+  //       style: {
+  //         fontSize: "12px", // Small text
+  //         padding: "8px 16px", // Less padding
+  //         minWidth: "150px", // Toast width
+  //         maxWidth: "300px", // Optional: limit max width
+  //         borderRadius: "10px", // Rounded look
+  //         backgroundColor: "#1f1f1f", // Override for true dark
+  //         color: "red", // Text color
+  //       },
+  //     });
+  //   }
+  //   setIsDownlaoding(true);
+  //   try {
+  //     const response = await axios.post(`http://localhost:3000/api/twitter`, {
+  //       tweetUrl: input,
+  //     });
+  //     // console.log("response from twitter", response);
+  //     if (response.status === 200) {
+  //       const data = await response.data;
+  //       console.log(response)
+  //       setDownloadUrl(data.videoUrl);
+  //       setIsDownlaoding(false);
+  //       toast("Download Completed", {
+  //         position: "top-right", // or top-right / bottom-right etc.
+  //         theme: "dark", // Enables dark theme
+  //         style: {
+  //           fontSize: "12px", // Small text
+  //           padding: "8px 16px", // Less padding
+  //           minWidth: "150px", // Toast width
+  //           maxWidth: "300px", // Optional: limit max width
+  //           borderRadius: "10px", // Rounded look
+  //           backgroundColor: "#1f1f1f", // Override for true dark
+  //           color: "#fff", // Text color
+  //         },
+  //       });
+  //     } else {
+  //       if (response.status === 404 || response.status === 500) {
+  //         toast.error(response.error);
+  //       }
+  //       setIsDownlaoding(false);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Failed to fetch video. Please try again later.", {
+  //       position: "top-right", // or top-right / bottom-right etc.
+  //       theme: "dark", // Enables dark theme
+  //       style: {
+  //         fontSize: "12px", // Small text
+  //         padding: "8px 16px", // Less padding
+  //         minWidth: "150px", // Toast width
+  //         maxWidth: "300px", // Optional: limit max width
+  //         borderRadius: "10px", // Rounded look
+  //         backgroundColor: "#1f1f1f", // Override for true dark
+  //         color: "red", // Text color
+  //       },
+  //     });
+  //     setIsDownlaoding(false);
+  //   }
+  // };
 
-  const handleTikTokUrl = async (e) => {
-    e.preventDefault();
-    if (!input || !input.includes("https://www.tiktok.com/")) {
-      return toast("enter valid url", {
-        position: "top-right", // or top-right / bottom-right etc.
-        theme: "dark", // Enables dark theme
-        style: {
-          fontSize: "12px", // Small text
-          padding: "8px 16px", // Less padding
-          minWidth: "150px", // Toast width
-          maxWidth: "300px", // Optional: limit max width
-          borderRadius: "10px", // Rounded look
-          backgroundColor: "#1f1f1f", // Override for true dark
-          color: "red", // Text color
-        },
-      });
-    }
-    setIsDownlaoding(true);
-    try {
-      const response = await axios.post(`${backend_url}/api/tiktok`, {
-        tiktokUrl: input,
-      });
+  // const handleTikTokUrl = async (e) => {
+  //   e.preventDefault();
+  //   if (!input || !input.includes("https://www.tiktok.com/")) {
+  //     return toast("enter valid url", {
+  //       position: "top-right", // or top-right / bottom-right etc.
+  //       theme: "dark", // Enables dark theme
+  //       style: {
+  //         fontSize: "12px", // Small text
+  //         padding: "8px 16px", // Less padding
+  //         minWidth: "150px", // Toast width
+  //         maxWidth: "300px", // Optional: limit max width
+  //         borderRadius: "10px", // Rounded look
+  //         backgroundColor: "#1f1f1f", // Override for true dark
+  //         color: "red", // Text color
+  //       },
+  //     });
+  //   }
+  //   setIsDownlaoding(true);
+  //   try {
+  //     const response = await axios.post(`http://localhost:3000/api/tiktok`, {
+  //       tiktokUrl: input,
+  //     });
 
-      if (response.status === 200) {
-        const data = await response.data;
-        setDownloadUrl(data.video);
-        setIsDownlaoding(false);
-        toast("Download Completed", {
-          position: "top-right", // or top-right / bottom-right etc.
-          theme: "dark", // Enables dark theme
-          style: {
-            fontSize: "12px", // Small text
-            padding: "8px 16px", // Less padding
-            minWidth: "150px", // Toast width
-            maxWidth: "300px", // Optional: limit max width
-            borderRadius: "10px", // Rounded look
-            backgroundColor: "#1f1f1f", // Override for true dark
-            color: "#fff", // Text color
-          },
-        });
-      } else {
-        if (response.status === 404 || response.status === 500) {
-          toast.error(response.error);
-        }
-        setIsDownlaoding(false);
-      }
-    } catch (error) {
-      toast.error("Failed to fetch video. Please try again later.", {
-        position: "top-right", // or top-right / bottom-right etc.
-        theme: "dark", // Enables dark theme
-        style: {
-          fontSize: "12px", // Small text
-          padding: "8px 16px", // Less padding
-          minWidth: "150px", // Toast width
-          maxWidth: "300px", // Optional: limit max width
-          borderRadius: "10px", // Rounded look
-          backgroundColor: "#1f1f1f", // Override for true dark
-          color: "red", // Text color
-        },
-      });
-      setIsDownlaoding(false);
-    }
-  };
+  //     if (response.status === 200) {
+  //       const data = await response.data;
+  //       console.log(response)
+  //       setDownloadUrl(data.videoUrl);
+  //       setIsDownlaoding(false);
+  //       toast("Download Completed", {
+  //         position: "top-right", // or top-right / bottom-right etc.
+  //         theme: "dark", // Enables dark theme
+  //         style: {
+  //           fontSize: "12px", // Small text
+  //           padding: "8px 16px", // Less padding
+  //           minWidth: "150px", // Toast width
+  //           maxWidth: "300px", // Optional: limit max width
+  //           borderRadius: "10px", // Rounded look
+  //           backgroundColor: "#1f1f1f", // Override for true dark
+  //           color: "#fff", // Text color
+  //         },
+  //       });
+  //     } else {
+  //       if (response.status === 404 || response.status === 500) {
+  //         toast.error(response.error);
+  //       }
+  //       setIsDownlaoding(false);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Failed to fetch video. Please try again later.", {
+  //       position: "top-right", // or top-right / bottom-right etc.
+  //       theme: "dark", // Enables dark theme
+  //       style: {
+  //         fontSize: "12px", // Small text
+  //         padding: "8px 16px", // Less padding
+  //         minWidth: "150px", // Toast width
+  //         maxWidth: "300px", // Optional: limit max width
+  //         borderRadius: "10px", // Rounded look
+  //         backgroundColor: "#1f1f1f", // Override for true dark
+  //         color: "red", // Text color
+  //       },
+  //     });
+  //     setIsDownlaoding(false);
+  //   }
+  // };
 
   const handleYouTubeUrl = async (e) => {
     e.preventDefault();
@@ -226,12 +228,13 @@ export const DataContextProvider = ({ children }) => {
     }
     setIsDownlaoding(true);
     try {
-      const response = await axios.post(`${backend_url}/api/youtube`, {
+      const response = await axios.post(`${backend_url}:3000/api/youtube`, {
         youtubeUrl: input,
       });
       // console.log("response from twitter", response);
       if (response.status === 200) {
         const data = await response.data;
+        // console.log(response)
         setDownloadUrl(data.videoUrl);
         setIsDownlaoding(false);
         toast("Download Completed", {
@@ -271,75 +274,76 @@ export const DataContextProvider = ({ children }) => {
     }
   };
 
-  const handlePinterestUrl = async (e) => {
+  // const handlePinterestUrl = async (e) => {
 
-    e.preventDefault();
+  //   e.preventDefault();
 
-    if (!input || !input.includes("https://pin.it/")) {
-      return toast("enter valid url", {
-        position: "top-right", // or top-right / bottom-right etc.
-        theme: "dark", // Enables dark theme
-        style: {
-          fontSize: "12px", // Small text
-          padding: "8px 16px", // Less padding
-          minWidth: "150px", // Toast width
-          maxWidth: "300px", // Optional: limit max width
-          borderRadius: "10px", // Rounded look
-          backgroundColor: "#1f1f1f", // Override for true dark
-          color: "red", // Text color
-        },
-      });
-    }
+  //   if (!input || !input.includes("https://pin.it/")) {
+  //     return toast("enter valid url", {
+  //       position: "top-right", // or top-right / bottom-right etc.
+  //       theme: "dark", // Enables dark theme
+  //       style: {
+  //         fontSize: "12px", // Small text
+  //         padding: "8px 16px", // Less padding
+  //         minWidth: "150px", // Toast width
+  //         maxWidth: "300px", // Optional: limit max width
+  //         borderRadius: "10px", // Rounded look
+  //         backgroundColor: "#1f1f1f", // Override for true dark
+  //         color: "red", // Text color
+  //       },
+  //     });
+  //   }
 
-    setIsDownlaoding(true);
+  //   setIsDownlaoding(true);
 
-    try {
-      const response = await axios.post(`${backend_url}/api/pinterest`, {
-        pinterestUrl: input,
-      });
+  //   try {
+  //     const response = await axios.post(`http://localhost:3000/api/pinterest`, {
+  //       pinterestUrl: input,
+  //     });
 
-      // console.log("response from pinterest", response.data);
+  //     // console.log("response from pinterest", response.data);
 
-      if (response.status === 200) {
-        const data = await response.data;
-        setDownloadUrl(data.video);
-        setIsDownlaoding(false);
-        toast("Download Completed", {
-          position: "top-right", // or top-right / bottom-right etc.
-          theme: "dark", // Enables dark theme
-          style: {
-            fontSize: "12px", // Small text
-            padding: "8px 16px", // Less padding
-            minWidth: "150px", // Toast width
-            maxWidth: "300px", // Optional: limit max width
-            borderRadius: "10px", // Rounded look
-            backgroundColor: "#1f1f1f", // Override for true dark
-            color: "#fff", // Text color
-          },
-        });
-      } else {
-        if (response.status === 404 || response.status === 500) {
-          toast.error(response.error);
-        }
-        setIsDownlaoding(false);
-      }
-    } catch (error) {
-      toast.error("Failed to fetch video. Please try again later.", {
-        position: "top-right", // or top-right / bottom-right etc.
-        theme: "dark", // Enables dark theme
-        style: {
-          fontSize: "12px", // Small text
-          padding: "8px 16px", // Less padding
-          minWidth: "150px", // Toast width
-          maxWidth: "300px", // Optional: limit max width
-          borderRadius: "10px", // Rounded look
-          backgroundColor: "#1f1f1f", // Override for true dark
-          color: "red", // Text color
-        },
-      });
-      setIsDownlaoding(false);
-    }
-  };
+  //     if (response.status === 200) {
+  //       const data = await response.data;
+  //       console.log(response)
+  //       setDownloadUrl(data.videoUrl);
+  //       setIsDownlaoding(false);
+  //       toast("Download Completed", {
+  //         position: "top-right", // or top-right / bottom-right etc.
+  //         theme: "dark", // Enables dark theme
+  //         style: {
+  //           fontSize: "12px", // Small text
+  //           padding: "8px 16px", // Less padding
+  //           minWidth: "150px", // Toast width
+  //           maxWidth: "300px", // Optional: limit max width
+  //           borderRadius: "10px", // Rounded look
+  //           backgroundColor: "#1f1f1f", // Override for true dark
+  //           color: "#fff", // Text color
+  //         },
+  //       });
+  //     } else {
+  //       if (response.status === 404 || response.status === 500) {
+  //         toast.error(response.error);
+  //       }
+  //       setIsDownlaoding(false);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Failed to fetch video. Please try again later.", {
+  //       position: "top-right", // or top-right / bottom-right etc.
+  //       theme: "dark", // Enables dark theme
+  //       style: {
+  //         fontSize: "12px", // Small text
+  //         padding: "8px 16px", // Less padding
+  //         minWidth: "150px", // Toast width
+  //         maxWidth: "300px", // Optional: limit max width
+  //         borderRadius: "10px", // Rounded look
+  //         backgroundColor: "#1f1f1f", // Override for true dark
+  //         color: "red", // Text color
+  //       },
+  //     });
+  //     setIsDownlaoding(false);
+  //   }
+  // };
 
   const handleClean = () => {
     setDownloadUrl("");
@@ -354,10 +358,10 @@ export const DataContextProvider = ({ children }) => {
         downloadUrl,
         isAudioURL,
         // handleInstagramUrl,
-        handleTwitterUrl,
-        handleTikTokUrl,
+        // handleTwitterUrl,
+        // handleTikTokUrl,
         handleYouTubeUrl,
-        handlePinterestUrl,
+        // handlePinterestUrl,
         input,
         setInput,
         isDownloading,

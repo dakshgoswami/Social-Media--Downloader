@@ -8,7 +8,7 @@ import youtubedl from 'youtube-dl-exec';
 
 export const tiktokController = async (req, res) => {
   const { tiktokUrl } = req.body;
-
+  console.log(tiktokUrl)
   if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
     return res.status(400).json({ error: "Invalid TikTok URL" });
   }
@@ -22,7 +22,7 @@ export const tiktokController = async (req, res) => {
     });
 
     const downloadUrl = result?.url || result?.formats?.find(f => f.ext === "mp4")?.url;
-
+    console.log(downloadUrl)
     if (!downloadUrl) {
       return res.status(404).json({ error: "Video URL not found" });
     }

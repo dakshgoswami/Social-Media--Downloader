@@ -16,19 +16,19 @@ app.use(express.json());
 app.use("/downloads", express.static(downloadsDir));
 
 // app.use('/api/instagram', instagramRouter)
-app.use("/api/tiktok", tiktokRouter);
-app.use("/api/twitter", twitterRouter);
 app.use("/api/youtube", youtubeRouter);
-app.use("/api/pinterest", pinterestRouter);
+// app.use("/api/tiktok", tiktokRouter);
+// app.use("/api/twitter", twitterRouter);
+// app.use("/api/pinterest", pinterestRouter);
 
-app.get("/check-yt-dlp", (req, res) => {
-  exec("yt-dlp --version", (err, stdout, stderr) => {
-    if (err) {
-      return res.status(500).send("❌ yt-dlp not found");
-    }
-    return res.send(`✅ yt-dlp version: ${stdout}`);
-  });
-});
+// app.get("/check-yt-dlp", (req, res) => {
+//   exec("yt-dlp --version", (err, stdout, stderr) => {
+//     if (err) {
+//       return res.status(500).send("❌ yt-dlp not found");
+//     }
+//     return res.send(`✅ yt-dlp version: ${stdout}`);
+//   });
+// });
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {

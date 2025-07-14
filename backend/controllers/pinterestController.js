@@ -6,8 +6,8 @@ import youtubedl from 'youtube-dl-exec';
 
 export const pinterestController = async (req, res) => {
   const { pinterestUrl } = req.body;
-
-  if (!pinterestUrl || !pinterestUrl.includes("pinterest.")) {
+  console.log(pinterestUrl)
+  if (!pinterestUrl || !pinterestUrl.includes("https://pin.it")) {
     return res.status(400).json({ error: "Invalid Pinterest URL" });
   }
 
@@ -20,7 +20,7 @@ export const pinterestController = async (req, res) => {
     });
 
     const downloadUrl = result?.url || result?.formats?.find(f => f.ext === "mp4")?.url;
-
+    console.log(downloadUrl)
     if (!downloadUrl) {
       return res.status(404).json({ error: "Video URL not found" });
     }
@@ -31,7 +31,6 @@ export const pinterestController = async (req, res) => {
     res.status(500).json({ error: "Failed to extract Pinterest video." });
   }
 };
-
 
 export const pinterestDownloaderController = (req, res) => {
   const { file } = req.query;

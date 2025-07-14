@@ -3,10 +3,10 @@ import Footer from "./components/Footer";
 // import InstagramDownlaoder from "./pages/InstagramDownlaoder";
 import { ToastContainer } from "react-toastify";
 import { Routes, Route } from "react-router-dom";
-import TwitterDownloader from "./pages/TwitterDownloader";
 import YouTubeDownloader from "./pages/YouTubeDownloader";
-import PintrestDownloader from "./pages/PintrestDownloader";
-import TikTokDownloader from "./pages/TikTokDownloader";
+// import TwitterDownloader from "./pages/TwitterDownloader";
+// import PintrestDownloader from "./pages/PintrestDownloader";
+// import TikTokDownloader from "./pages/TikTokDownloader";
 
 const App = () => {
 
@@ -18,9 +18,9 @@ const App = () => {
         <Routes>
           {/* <Route path="/" element={<InstagramDownlaoder />} /> */}
           <Route path="/" element={<YouTubeDownloader />} />
-          <Route path="/twitter" element={<TwitterDownloader />} />
+          {/* <Route path="/twitter" element={<TwitterDownloader />} />
           <Route path="/tiktok" element={<TikTokDownloader />} />
-          <Route path="/pinterest" element={<PintrestDownloader />} />
+          <Route path="/pinterest" element={<PintrestDownloader />} /> */}
         </Routes>
       </main>
       <Footer />

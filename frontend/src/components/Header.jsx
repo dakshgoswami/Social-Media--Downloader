@@ -29,7 +29,7 @@ const Header = () => {
             <li className="hover:underline text-black hover:text-red-700 font-bold">
               <Link to="/">YouTube</Link>
             </li>
-            <li className="hover:underline text-black hover:text-blue-500 font-bold">
+            {/* <li className="hover:underline text-black hover:text-blue-500 font-bold">
               <Link to="/twitter">Twitter</Link>
             </li>
             <li className="hover:underline text-black hover:text-pink-600 font-bold">
@@ -37,20 +37,20 @@ const Header = () => {
             </li>
             <li className="hover:underline text-black hover:text-red-900 font-bold">
               <Link to="/pinterest">Pinterest</Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
 
         {/* Hamburger Icon */}
-        <div
+        {/* <div
           className="sm:hidden block text-2xl text-gray-700 cursor-pointer"
           onClick={() => setMenuOpen(true)}
         >
           <IoMenu />
-        </div>
+        </div> */}
 
         {/* Mobile Menu Overlay */}
-        <div
+        {/* <div
           className={`fixed top-0 right-0 w-64 h-full bg-zinc-100 text-zinc-900 z-50 transform transition-transform duration-300 ease-in-out ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
@@ -94,7 +94,7 @@ const Header = () => {
               <li>Pinterest</li>
             </Link>
           </ul>
-        </div>
+        </div> */}
       </div>
     </header>
   );

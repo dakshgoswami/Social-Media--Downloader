@@ -4,25 +4,29 @@ import youtubedl from "youtube-dl-exec";
 
 export const youtubeController = async (req, res) => {
   const { youtubeUrl } = req.body;
-
+  // console.log(youtubeUrl)
   if (!youtubeUrl) {
     return res.status(400).json({ error: "Invalid YouTube URL" });
   }
 
   // Command to get direct video+audio URL (merged stream or best)
   try {
-    const output = await youtubedl(youtubeUrl, {
+    const result = await youtubedl(youtubeUrl, {
       dumpSingleJson: true,
       noWarnings: true,
-      noCheckCertificates: true,
       preferFreeFormats: true,
+      skipDownload: true,
     });
 
-    const videoUrl = output?.url || output?.formats?.[0]?.url;
+     const format = result.formats.find(
+      (f) => f.ext === "mp4" && f.acodec !== "none" && f.vcodec !== "none"
+    );
+    // console.log(format)
+    if (!format || !format.url) {
+      return res.status(404).json({ error: "No downloadable format found." });
+    }
 
-    if (!videoUrl) throw new Error("No video URL found");
-
-    return res.status(200).json({ videoUrl });
+    return res.status(200).json({ videoUrl: format.url });
   } catch (error) {
     console.error("youtube-dl-exec error:", error.message);
     return res.status(500).json({ error: "Failed to get video URL" });
