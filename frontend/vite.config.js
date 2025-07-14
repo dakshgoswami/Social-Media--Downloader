@@ -6,9 +6,14 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   // vite.config.js
-  server: {
-    proxy: {
-      "/api": "http://localhost:3000",
+  ...(process.env.NODE_ENV === "development" && {
+    server: {
+      proxy: {
+        "/api": "http://localhost:3000",
+      },
     },
+  }),
+  build: {
+    outDir: "dist", // ⚠️ must match the directory you tell Render
   },
 });
