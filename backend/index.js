@@ -7,8 +7,7 @@ import twitterRouter from "./routes/twitterRoute.js";
 import youtubeRouter from "./routes/youtubeRote.js";
 import pinterestRouter from "./routes/pinterestRoute.js";
 import downloadsDir from "./utils/downloadPath.js";
-import twitterRouter from "./routes/twitterRoute.js";
-
+import tiktokRouter from "./routes/tiktokRoute.js"
 const app = express();
 app.use(cors());
 app.use(express.json());
